@@ -145,15 +145,15 @@
             <div class="container">
                 <div class="row justify-content-between no-gutters">
                     <div class="col-lg-5">
-                        <h3 class="contact-one__title">Get in Touch</h3><!-- /.contact-one__title -->
-                        <form action="inc/sendemail.php"  id="contactform" class="contact-one__form contact-form-validated">
-                            <form action="#" id="contactform" class="contact-one__form contact-form-validated">
-                                <input type="text" name="name" id="name" placeholder="Full Name" required>
-                                <input type="email" name="email" id="email" placeholder="Email Address" required>
-                                <textarea id="message" placeholder="Your Message" name="message" required></textarea>
-                                <button type="submit" class="thm-btn contact-one__btn">Send</button>
-                            </form>
-                            
+                        <h3 class="contact-one__title">Get in Touch</h3>
+                        <form id="contactform" class="contact-one__form contact-form-validated">
+                            <input type="text" name="name" id="name" placeholder="Full Name" required>
+                            <input type="email" name="email" id="email" placeholder="Email Address" required>
+                            <textarea id="message" placeholder="Your Message" name="message" required></textarea>
+                            <button type="submit" class="thm-btn contact-one__btn">Send</button>
+                        </form>
+                    </div>
+                    
                         </form><!-- /.contact-one__form -->
                     </div><!-- /.col-lg-5 -->
                     <div class="col-lg-4">
@@ -324,62 +324,55 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBk25E4mNfVIEt3tNl3K1HwNZVruVoFBlA"></script>
     <script src="js/gmaps.js"></script>
     <script src="js/map-helper.js"></script>
-</body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         <script>
           $(document).ready(function () {
-    $('#contactform').on('submit', function (e) {
-        e.preventDefault();
+            $('#contactform').on('submit', function (e) {
+              e.preventDefault();
+        
+              var name = $('#name').val();
+              var email = $('#email').val();
+              var message = $('#message').val();
 
-        var name = $('#name').val();
-        var email = $('#email').val();
-        var message = $('#message').val();
-
-        // Basic validation
-        if (!name || !email || !message) {
-            toastr.error('Please fill all the fields.');
-            return;
-        }
-
-        $.ajax({
-            url: 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec',
-            method: 'POST',
-            data: {
-                name: name,
-                email: email,
-                message: message,
-            },
-            success: function (response) {
-                toastr.success('Form submitted successfully!');
-                setTimeout(function () {
+              $.ajax({
+                url: 'https://script.google.com/macros/s/AKfycbxBGsEmBtssWIr_MC7yLfXZIF7WLlX4itA68AW61z61kMlX54uU8CFwF79wv7dYLK_V/exec',
+                method: 'POST',
+                data: {
+                  name: name,
+                  email: email,
+                  message: message,
+                },
+                success: function (response) {
+                  toastr.success('Form submitted successfully!');
+                  setTimeout(function () {
                     window.location.href = 'http://127.0.0.1:5500/contact.html';
-                }, 3000);
-            },
-            error: function (xhr, status, error) {
-                console.error("Error:", xhr.responseText);
-                toastr.error('There was an error submitting the form. Please try again.');
-            }
-        });
-    });
-
-    toastr.options = {
-        "closeButton": true,
-        "debug": false,
-        "newestOnTop": false,
-        "progressBar": false,
-        "positionClass": "toast-top-full-width",
-        "preventDuplicates": false,
-        "onclick": null,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "5000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-    };
-});
-
+                  }, 3000);
+                },
+                error: function (xhr, status, error) {
+                  console.error("Error:", xhr.responseText);
+                  toastr.error('There was an error submitting the form. Please try again.');
+                }
+              });
+            });
+          });
+        
+          toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-full-width",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+          };
         </script>
+        </body>
 </html>
