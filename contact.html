@@ -147,10 +147,13 @@
                     <div class="col-lg-5">
                         <h3 class="contact-one__title">Get in Touch</h3><!-- /.contact-one__title -->
                         <form action="inc/sendemail.php"  id="contactform" class="contact-one__form contact-form-validated">
-                            <input type="text" name="name"  id="name" placeholder="Full Name">
-                            <input type="text" name="email" id="email" placeholder="Email Address">
-                            <textarea id="message" placeholder="Your Messege" name="message"></textarea>
-                            <button type="submit" class="thm-btn contact-one__btn">Send</button>
+                            <form action="#" id="contactform" class="contact-one__form contact-form-validated">
+                                <input type="text" name="name" id="name" placeholder="Full Name" required>
+                                <input type="email" name="email" id="email" placeholder="Email Address" required>
+                                <textarea id="message" placeholder="Your Message" name="message" required></textarea>
+                                <button type="submit" class="thm-btn contact-one__btn">Send</button>
+                            </form>
+                            
                         </form><!-- /.contact-one__form -->
                     </div><!-- /.col-lg-5 -->
                     <div class="col-lg-4">
@@ -325,50 +328,58 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         <script>
           $(document).ready(function () {
-            $('#contactform').on('submit', function (e) {
-              e.preventDefault();
-        
-              var name = $('#Name').val();
-              var phone = $('#Phone').val();
-              var message = $('#Message').val();
-              $.ajax({
-                url: 'https://script.google.com/macros/s/https://script.google.com/https://script.google.com/macros/s/AKfycbxuAD765tclsL61YL6jABGE-j2uXsNEtA5_EiaE05EUEpgKG1NZM98YiTdNpia8Mm1r/exec/s/AKfycbxuAD765tclsL61YL6jABGE-j2uXsNEtA5_EiaE05EUEpgKG1NZM98YiTdNpia8Mm1r/exec/exec',
-                method: 'POST',
-                data: {
-                  name: name,
-                  email: email,
-                  message: message,
-                },
-                success: function (response) {
-                  toastr.success('Form submitted successfully!');
-                  setTimeout(function () {
+    $('#contactform').on('submit', function (e) {
+        e.preventDefault();
+
+        var name = $('#name').val();
+        var email = $('#email').val();
+        var message = $('#message').val();
+
+        // Basic validation
+        if (!name || !email || !message) {
+            toastr.error('Please fill all the fields.');
+            return;
+        }
+
+        $.ajax({
+            url: 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec',
+            method: 'POST',
+            data: {
+                name: name,
+                email: email,
+                message: message,
+            },
+            success: function (response) {
+                toastr.success('Form submitted successfully!');
+                setTimeout(function () {
                     window.location.href = 'http://127.0.0.1:5500/contact.html';
-                  }, 3000);
-                },
-                error: function (xhr, status, error) {
-                  console.error("Error:", xhr.responseText);
-                  toastr.error('There was an error submitting the form. Please try again.');
-                }
-              });
-            });
-          });
-        
-          toastr.options = {
-            "closeButton": true,
-            "debug": false,
-            "newestOnTop": false,
-            "progressBar": false,
-            "positionClass": "toast-top-full-width",
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-          };
+                }, 3000);
+            },
+            error: function (xhr, status, error) {
+                console.error("Error:", xhr.responseText);
+                toastr.error('There was an error submitting the form. Please try again.');
+            }
+        });
+    });
+
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-top-full-width",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+});
+
         </script>
 </html>
